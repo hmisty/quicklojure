@@ -12,8 +12,8 @@ RLWRAP=rlwrap
 BREAKCHARS="(){}[],^%$#@\"\";:''|\\"
 COMPLETIONS=$HOME/.clj_completions
 JAVA=/usr/bin/java
-CLJ_LIB=$HOME/Library/Clojure/lib
-CLASSPATH=`find $HOME/Library/Clojure/lib | xargs | sed 's/ /:/g'`
+CLJ_LIB=$HOME/Library/quicklojure/lib
+CLASSPATH=`find $CLJ_LIB | xargs | sed 's/ /:/g'`
 
 if [ -f .classpath ]; then
 	CLASSPATH=$CLASSPATH:`cat .classpath`
