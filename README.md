@@ -6,6 +6,12 @@ This is a pre-packaged clojure distribution, mainly for clojure newbies:
 * to launch clojure codes fast
 * ...and other sweet stuffs...
 
+## Install
+* MacOSX
+  * git clone https://github.com/hmisty/quicklojure.git
+  * cp -R quicklojure ~/Library/
+  * sudo ln -s ~/Library/quicklojure/clj /usr/bin
+  * clj #Happy REPLing!
 
 ## To Be
 * the quickest-to-start clojure distribution
