@@ -11,7 +11,10 @@
 RLWRAP=rlwrap
 BREAKCHARS="(){}[],^%$#@\"\";:''|\\"
 COMPLETIONS=$HOME/.clj_completions
+
 JAVA=/usr/bin/java
+JPARAM="-d32 -client -XX:+TieredCompilation -XX:TieredStopAtLevel=1" #for 64bit jvm
+
 CLJ_LIB=$HOME/Library/quicklojure/lib
 CLASSPATH=`find $CLJ_LIB | xargs | sed 's/ /:/g'`
 
@@ -20,8 +23,8 @@ if [ -f .classpath ]; then
 fi
 
 if [ $# -eq 0 ]; then 
-	exec $RLWRAP --remember -c -b "$BREAKCHARS" $JAVA -cp "$CLASSPATH" clojure.main
+	exec $RLWRAP --remember -c -b "$BREAKCHARS" $JAVA $JPARAM -cp "$CLASSPATH" clojure.main
 else
-	exec $JAVA -cp "$CLASSPATH" clojure.main "$1" -- "$@"
+	exec $JAVA $JPARAM -cp "$CLASSPATH" clojure.main "$1" -- "$@"
 fi
 

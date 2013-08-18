@@ -39,6 +39,7 @@ This is a pre-packaged clojure distribution, mainly for clojure newbies:
 
 ## Known Issues
 * jline doesn't work well in macosx. it messes up repl prompt when moving arrow keys.
+* use drip to replace java can speed up jvm starting but it will mess up rlwrap.
 
 
 ## License
