@@ -1,8 +1,14 @@
 # quicklojure
 
+This is a pre-packaged clojure distribution, mainly for clojure newbies:
+* to start clojure quickly and painlessly
+* to setup a clojure environment easily
+* to launch clojure codes fast
+* ...and other sweet stuffs...
+
 
 ## To Be
-* the fastest clojure distribution
+* the quickest-to-start clojure distribution
 * (TODO) sweet nrepl server-client helper
   * server-side: nrepl-start PORT
   * client-side: nrepl-connect HOST PORT and you are then in the remote REPL
