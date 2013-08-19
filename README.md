@@ -36,6 +36,16 @@ Three great virtues of a programmer: laziness, impatience, and hubris. -- Larry 
 * (TODO) Windows
 
 
+## Under The Hood
+
+Here is the comprehensive list of what are included in the "lots of good ones":
+
+* clj
+* sublime text 2 plugin
+* (TODO) vim plugin
+* (TODO) emacs plugin
+
+
 ## Known Issues
 * jline doesn't work well in macosx. it messes up repl prompt when moving arrow keys.
 * use drip to replace java can speed up jvm starting but it will mess up rlwrap.
