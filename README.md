@@ -19,7 +19,10 @@ This is a pre-packaged clojure distribution, mainly for clojure newbies:
 * (TODO) sweet nrepl server-client helper
   * server-side: nrepl-start PORT
   * client-side: nrepl-connect HOST PORT and you are then in the remote REPL
-* (TODO) vim foreplay & emacs nrepl compatible
+* (TODO) nrepl plugins for vim, emacs, etc
+  * temp work-around:
+    * clj, and start nrepl server: (use '[clojure.tools.nrepl.server :only (start-server stop-server)]) (defonce server (start-server :port 7888))
+    * vim: use fireplace vim plugin, :Connect nrepl://localhost:7888
 * (TODO) auto-dependency
 
 
