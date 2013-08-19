@@ -15,7 +15,7 @@ COMPLETIONS=$HOME/.clj_completions
 JAVA=/usr/bin/java
 JPARAM="-d32 -client -XX:+TieredCompilation -XX:TieredStopAtLevel=1" #for 64bit jvm
 
-CLJ_LIB=$HOME/Library/quicklojure/lib
+CLJ_LIB=/Library/quicklojure/lib
 CLASSPATH=`find $CLJ_LIB | xargs | sed 's/ /:/g'`
 
 if [ -f .classpath ]; then
