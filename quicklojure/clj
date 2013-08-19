@@ -23,7 +23,7 @@ if [ -f .classpath ]; then
 fi
 
 if [ $# -eq 0 ]; then 
-	exec $RLWRAP --remember -c -b "$BREAKCHARS" $JAVA $JPARAM -cp "$CLASSPATH" clojure.main
+	exec $RLWRAP -r -c -b "$BREAKCHARS" -f $COMPLETIONS $JAVA $JPARAM -cp "$CLASSPATH" clojure.main
 else
 	exec $JAVA $JPARAM -cp "$CLASSPATH" clojure.main "$1" -- "$@"
 fi
