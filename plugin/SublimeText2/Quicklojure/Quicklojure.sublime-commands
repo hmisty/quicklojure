@@ -1,0 +1,6 @@
+[
+	{
+		"caption": "Clojure: Start REPL",
+		"command": "clojure_start_repl"
+	}
+]
