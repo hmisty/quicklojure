@@ -19,6 +19,7 @@ JPARAM="-d32 -client -XX:+TieredCompilation -XX:TieredStopAtLevel=1" #for 64bit 
 
 CLJ_LIB=/Library/quicklojure/lib
 CLASSPATH=`find $CLJ_LIB | xargs | sed 's/ /:/g'`
+CLASSPATH=.:$CLASSPATH ##having current location for requiring *.clj sources
 
 if [ -f .classpath ]; then
 	CLASSPATH=$CLASSPATH:`cat .classpath`
