@@ -42,6 +42,7 @@ Here is the comprehensive list of what are included in the "lots of good ones":
 
 * clj
 * sublime text 2 plugin
+  * Borrowed from Eleven and refined
 * (TODO) vim plugin
 * (TODO) emacs plugin
 
