@@ -8,7 +8,7 @@
 
 # reference: http://en.wikibooks.org/wiki/Clojure_Programming/Getting_Started
 
-NREPL_PORT=7888
+NREPL_PORT=7999
 
 RLWRAP=rlwrap
 BREAKCHARS="(){}[],^%$#@\"\";:''|\\"
