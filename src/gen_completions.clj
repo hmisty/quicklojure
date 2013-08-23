@@ -4,5 +4,3 @@
     (System/getenv "HOME") "/.clj_completions")))]   
 (.write f  (apply str
     (interpose \newline completions))))
-
-(defn add [a b] (+ a b))

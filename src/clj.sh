@@ -18,22 +18,21 @@ JAVA=/usr/bin/java
 JPARAM="-d32 -client -XX:+TieredCompilation -XX:TieredStopAtLevel=1" #for 64bit jvm
 
 CLJ_LIB=/Library/quicklojure/lib
-CLASSPATH=`find $CLJ_LIB | xargs | sed 's/ /:/g'`
-CLASSPATH=.:$CLASSPATH ##having current location for requiring *.clj sources
+CLASSPATH=`pwd`:$CLJ_LIB/*
 
 if [ -f .classpath ]; then
 	CLASSPATH=$CLASSPATH:`cat .classpath`
 fi
 
 if [ $# -eq 0 ]; then
-	exec $RLWRAP -r -c -b "$BREAKCHARS" -f $COMPLETIONS $JAVA $JPARAM -cp "$CLASSPATH" clojure.main -r
+	exec $RLWRAP -r -c -b "$BREAKCHARS" -f $COMPLETIONS $JAVA $JPARAM -classpath "$CLASSPATH" clojure.main -r
 elif [ "$1" == "--nrepl" ]; then
 	if [ "$2" != "" ]; then NREPL_PORT=$2; fi
-	exec $RLWRAP -r -c -b "$BREAKCHARS" -f $COMPLETIONS $JAVA $JPARAM -cp "$CLASSPATH" clojure.main -e "(use '[clojure.tools.nrepl.server :only (start-server stop-server)])(defonce server (start-server :port $NREPL_PORT))" -r
+	exec $RLWRAP -r -c -b "$BREAKCHARS" -f $COMPLETIONS $JAVA $JPARAM -classpath "$CLASSPATH" clojure.main -e "(use '[clojure.tools.nrepl.server :only (start-server stop-server)])(defonce server (start-server :port $NREPL_PORT))" -r
 elif [ "$1" == "--nrepl-headless" ]; then
 	if [ "$2" != "" ]; then NREPL_PORT=$2; fi
-	exec $JAVA $JPARAM -cp "$CLASSPATH" clojure.main -e "(use '[clojure.tools.nrepl.server :only (start-server stop-server)])(defonce server (start-server :port $NREPL_PORT))"
+	exec $JAVA $JPARAM -classpath "$CLASSPATH" clojure.main -e "(use '[clojure.tools.nrepl.server :only (start-server stop-server)])(defonce server (start-server :port $NREPL_PORT))"
 else #execute a clj file $1
-	exec $JAVA $JPARAM -cp "$CLASSPATH" clojure.main "$1" -- "$@"
+	exec $JAVA $JPARAM -classpath "$CLASSPATH" clojure.main "$1" -- "$@"
 fi
 
