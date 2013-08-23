@@ -12,7 +12,7 @@ mkdir -p .tmp/usr/bin .tmp/Library/quicklojure
 cp -R src/* .tmp/Library/quicklojure/
 cp -R lib .tmp/Library/quicklojure/
 cd .tmp/usr/bin
-ln -s /Library/quicklojure/clj clj
+ln -s /Library/quicklojure/clj.sh clj
 cd -
 pkgbuild --identifier quicklojure.pkg.app --root .tmp quicklojure.pkg
 rm -rf .tmp
