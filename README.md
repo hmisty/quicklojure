@@ -46,6 +46,12 @@ Here is the comprehensive list of what are included in the "lots of good ones":
 * (TODO) vim plugin
 * (TODO) emacs plugin
 
+new ver: clj.c, designed install dir:
+/usr/bin/clj
+/usr/lib/quicklojure/ext/ .jar
+/usr/lib/quicklojure/tools/ .clj, etc
+/usr/share/quicklojure/plugin/ editor plugins
+
 
 ## Known Issues
 * jline doesn't work well in macosx. it messes up repl prompt when moving arrow keys.
