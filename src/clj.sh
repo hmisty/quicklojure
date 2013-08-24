@@ -15,9 +15,9 @@ BREAKCHARS="(){}[],^%$#@\"\";:''|\\"
 COMPLETIONS=$HOME/.clj_completions
 
 JAVA=/usr/bin/java
-JPARAM="-d32 -client -XX:+TieredCompilation -XX:TieredStopAtLevel=1" #for 64bit jvm
+JPARAM="-d32 -client -Xverify:none"
 
-CLJ_LIB=/Library/quicklojure/lib
+CLJ_LIB=/usr/lib/quicklojure/ext
 CLASSPATH=`pwd`:$CLJ_LIB/*
 
 if [ -f .classpath ]; then
