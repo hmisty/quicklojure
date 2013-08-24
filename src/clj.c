@@ -1,5 +1,8 @@
 #include <jni.h>
 
+/* src/clj.c:20: warning: ‘JNI_CreateJavaVM’ is deprecated (declared at /System/Library/Frameworks/JavaVM.framework/Headers/jni.h:1937)
+ */
+
 #define OK 0
 #define ERROR_CREATE_JVM 1
 #define CLASS_NOT_FOUND 2
@@ -30,7 +33,7 @@ int main() {
 	if (mid == NULL) return METHOD_NOT_FOUND;
 
 	jobjectArray args = (*env)->NewObjectArray(env, 1, (*env)->FindClass(env, "java/lang/String"), NULL);
-	jstring arg0 = (*env)->NewStringUTF(env, "--repl");
+	jstring arg0 = (*env)->NewStringUTF(env, "-e '(+ 1 2)'");
 	(*env)->SetObjectArrayElement(env, args, 0, arg0);
 	(*env)->CallStaticVoidMethod(env, cls, mid, args);
 
