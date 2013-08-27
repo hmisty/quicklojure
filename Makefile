@@ -1,14 +1,14 @@
-CC=gcc
-INC=/System/Library/Frameworks/JavaVM.framework/Headers
-LIB=/System/Library/Frameworks/JavaVM.framework/Libraries
-PAR=-framework JavaVM
-OPT=-g
+TMP=/tmp/quicklojure
 
-all: clj
+all: build_osx_pkg
 
-clj: src/clj.c
-	$(CC) $(OPT) -I$(INC) -L$(LIB) $(PAR) -o $@ $<
+build_osx_pkg:
+	mkdir -p $(TMP)/usr/bin $(TMP)/usr/lib/quicklojure/ext
+	cp -R src/clj.sh $(TMP)/usr/bin/clj
+	cp -R lib/* $(TMP)/usr/lib/quicklojure/ext/
+	pkgbuild --identifier quicklojure.pkg.app --root $(TMP) quicklojure.pkg
+	rm -rf $(TMP)
 
-.PHONY: clean
+.PHONE: clean
 clean:
-	rm -rf clj clj.dSYM
+	rm quicklojure.pkg
