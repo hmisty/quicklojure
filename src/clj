@@ -9,7 +9,7 @@ use Cwd qw(abs_path);
 use IO::Socket;
 use File::Basename qw(dirname);
 
-$VERSION		= "0.0.3";
+$VERSION		= "0.0.4";
 $DEFAULT_NREPL_PORT 	= 7999;
 $JAVA 			= "/usr/bin/java";
 @JVM_ARGS 		= qw{-d32 -client -Xverify:none};
@@ -20,7 +20,7 @@ $CLOJURE_LIB 		= "/usr/lib/quicklojure/ext";
 # main program
 ################################################################################
 my %opts;
-getopts('vhHn:N:S:', \%opts);
+getopts('vhHn:N:S:R', \%opts);
 
 if (exists $opts{h}) {
 	&help_message;
@@ -57,11 +57,15 @@ if (exists $opts{h}) {
 			"-e", &init_code;
 		}
 	}
+} elsif (exists $opts{R}) {
+	system $JAVA, @JVM_ARGS, 
+	'-cp', &make_classpath,
+	"reply.ReplyMain"; 
 } else {
 	# no param at all, start a repl
 	system $JAVA, @JVM_ARGS, 
 	'-cp', &make_classpath,
-	"clojure.main"; 
+	"clojure.main";
 }
 
 ################################################################################
@@ -81,9 +85,14 @@ $0 <args>
 
 -h: this message
 -H: help message of clojure.main -h
+
+no args: start a simple repl
+-R: start REPL-y
+
 -n <PORT>: start nrepl server on <PORT>
 -N <PORT>: start headless nrepl server on <PORT> (in foreground)
 -S <PORT>: start headless nrepl server on <PORT> (in background)
+
 EOL
 }
 
