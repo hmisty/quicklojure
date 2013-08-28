@@ -6,9 +6,10 @@
 use Data::Dumper;
 use Getopt::Std;
 use Cwd qw(abs_path);
+use IO::Socket;
 use File::Basename qw(dirname);
 
-$VERSION		= "0.0.2";
+$VERSION		= "0.0.3";
 $DEFAULT_NREPL_PORT 	= 7999;
 $JAVA 			= "/usr/bin/java";
 @JVM_ARGS 		= qw{-d32 -client -Xverify:none};
@@ -19,7 +20,7 @@ $CLOJURE_LIB 		= "/usr/lib/quicklojure/ext";
 # main program
 ################################################################################
 my %opts;
-getopts('hHvn:N:', \%opts);
+getopts('vhHn:N:S:', \%opts);
 
 if (exists $opts{h}) {
 	&help_message;
@@ -40,6 +41,22 @@ if (exists $opts{h}) {
 	'-cp', &make_classpath,
 	"clojure.main", 
 	"-e", &init_code;
+} elsif (exists $opts{S}) {
+	$NREPL_PORT = $opts{S} || $DEFAULT_NREPL_PORT;
+	my $pid = fork();
+	die "fork() failed: $!" unless defined $pid;
+	unless ($pid) {
+		my $sock = new IO::Socket::INET(PeerAddr=>'127.0.0.1', 
+		PeerPort=>$NREPL_PORT, Proto=>'tcp');
+		if ($sock) {
+			die "nREPL server already running on port $NREPL_PORT?\n";
+		} else {
+			system $JAVA, @JVM_ARGS, 
+			'-cp', &make_classpath,
+			"clojure.main", 
+			"-e", &init_code;
+		}
+	}
 } else {
 	# no param at all, start a repl
 	system $JAVA, @JVM_ARGS, 
@@ -64,8 +81,9 @@ $0 <args>
 
 -h: this message
 -H: help message of clojure.main -h
--n <PORT>: start nrepl service, listening <PORT>
--N <PORT>: start headless nrepl service, listening <PORT>
+-n <PORT>: start nrepl server on <PORT>
+-N <PORT>: start headless nrepl server on <PORT> (in foreground)
+-S <PORT>: start headless nrepl server on <PORT> (in background)
 EOL
 }
 
