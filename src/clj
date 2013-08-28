@@ -1,0 +1,85 @@
+#!/usr/bin/perl -w
+
+# Quicklojure starter
+# (c) Evan Liu 2013
+
+use Data::Dumper;
+use Getopt::Std;
+use Cwd qw(abs_path);
+use File::Basename qw(dirname);
+
+$DEFAULT_NREPL_PORT 	= 7999;
+$JAVA 			= "/usr/bin/java";
+@JVM_ARGS 		= qw{-d32 -client -Xverify:none};
+$CLOJURE_LIB 		= "/usr/lib/quicklojure/ext";
+#$CLASSPATH_FILE 	= ".classpath";
+
+################################################################################
+# main program
+################################################################################
+my %opts;
+getopts('hHvn:N:', \%opts);
+
+if (exists $opts{h}) {
+	&help_message;
+} elsif (exists $opts{H}) {
+	&clj_help_message;
+} elsif (exists $opts{v}) {
+	&version_message;
+} elsif (exists $opts{n}) {
+	$NREPL_PORT = $opts{n} || $DEFAULT_NREPL_PORT;
+	system $JAVA, @JVM_ARGS, 
+	'-classpath', &make_classpath,
+	"clojure.main", 
+	"-e", &init_code,
+	"-r";
+} elsif (exists $opts{N}) {
+	$NREPL_PORT = $opts{N} || $DEFAULT_NREPL_PORT;
+	system $JAVA, @JVM_ARGS, 
+	'-cp', &make_classpath,
+	"clojure.main", 
+	"-e", &init_code;
+}
+
+################################################################################
+# subroutines
+################################################################################
+sub make_classpath {
+	my $filepath = shift;
+	my @classpath = (".", dirname(abs_path($0)), glob("$CLOJURE_LIB/*"));
+	unshift @classpath, dirname(abs_path($filepath)) if $filepath;
+	#TODO append cp in ./CLASSPATHFILE to classpath
+	return  join ':', @classpath; #FIXME magic :
+}
+
+sub help_message {
+	print <<EOL; 
+$0 <args>
+
+-h: this message
+-H: help message of clojure.main -h
+-n <PORT>: start nrepl service, listening <PORT>
+-N <PORT>: start headless nrepl service, listening <PORT>
+EOL
+}
+
+sub clj_help_message {
+	system $JAVA, @JVM_ARGS, 
+	'-classpath', &make_classpath,
+	"clojure.main", "-h";
+}
+
+sub version_message {
+	print <<EOL;
+$0 version 0.0.1
+EOL
+}
+
+sub init_code {
+	return <<EOL;
+(use '[clojure.tools.nrepl.server :only (start-server stop-server)])
+(defonce server (start-server :port $NREPL_PORT))
+(println "nREPL server started on port $NREPL_PORT")
+EOL
+}
+
