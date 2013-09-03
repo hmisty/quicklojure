@@ -61,6 +61,12 @@ if (exists $opts{h}) {
 	system $JAVA, @JVM_ARGS, 
 	'-cp', &make_classpath,
 	"reply.ReplyMain"; 
+} elsif (@ARGV) {
+	# execute a clj source file
+	system $JAVA, @JVM_ARGS,
+	'-cp', &make_classpath,
+	"clojure.main",
+	@ARGV;
 } else {
 	# no param at all, start a repl
 	system $JAVA, @JVM_ARGS, 
@@ -83,15 +89,18 @@ sub help_message {
 	print <<EOL; 
 $0 <args>
 
--h: this message
--H: help message of clojure.main -h
+-h		: this message
+-H		: help message of clojure.main -h
 
-no args: start a simple repl
--R: start REPL-y
+no args		: start a simple repl
+-R		: start REPL-y
 
--n <PORT>: start nrepl server on <PORT>
--N <PORT>: start headless nrepl server on <PORT> (in foreground)
--S <PORT>: start headless nrepl server on <PORT> (in background)
+pathfile	: Run a script from a file or resource
+-		: Run a script from standard input
+
+-n <PORT>	: start nrepl server on <PORT>
+-N <PORT>	: start headless nrepl server on <PORT> (in foreground)
+-S <PORT>	: start headless nrepl server on <PORT> (in background)
 
 EOL
 }
