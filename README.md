@@ -30,8 +30,7 @@ TODO
 
 
 ## Known Issues
-* jline doesn't work well in macosx. it messes up repl prompt when moving arrow keys.
-* use drip to replace java can speed up jvm starting but it will mess up rlwrap.
+* Does not support shebang #!/usr/bin/clj
 
 
 ## License
